@@ -1,0 +1,52 @@
+# 베르트랑 공준(2021/12/07)
+
+## 문제 : https://www.acmicpc.net/problem/4948
+
+### 전체적인 흐름   
+- 에라토스테네스 체:   
+- 2~input까지 배열을 사용(0, 1은 사용안함)   
+- 배열 값이 0이면 배열 index 숫자가 소수임   
+- 배열 index 숫자의 배수인 공간에 1을 넣기   
+- (1이 채워져있으면 건너뛰기(1이 채워진 애들은 소수가 아니거나 이미 count한 숫자))   
+
+```java
+package study.sparta.chapter1;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class E_BertrandsPostulate {
+    public static List<Integer> solution(List<Integer> input) {
+        List<Integer> count = new ArrayList<>();
+
+        for(Integer num : input) {
+            int cnt = 0;
+            int[] check = new int[2*num+1];
+            for(int i=2; i<=2*num; i++) {
+                if(check[i] == 0) {
+                    if(i > num)cnt++;
+                    for(int j=i; j<=2*num; j=j+i) check[j] = 1;
+                }
+            }
+            count.add(cnt);
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Integer> input = new ArrayList<>();
+        while(true) {
+            int n = sc.nextInt();
+            if(n == 0) break;
+            input.add(n);
+        }
+
+        for(Integer i: solution(input)) {
+            System.out.println(i);
+        }
+    }
+}
+```
