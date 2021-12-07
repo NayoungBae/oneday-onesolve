@@ -32,3 +32,88 @@ public class B_SnailsWantsToGoUp {
 }
 
 ```
+<br><br>
+
+### 2. 반복문을 쓰지 않고 푸는 방법을 찾아봄 : https://st-lab.tistory.com/75
+
+<img src="https://user-images.githubusercontent.com/44156173/145040173-d16b0e01-31c5-44f7-b199-76b4e7dc2ab7.png" width="70%">
+
+왜 아무리 읽어도 완전히 이해가 되지 않는걸까..   
+
+왜 length에서 down을 빼는건 지 확 와닿지 않는다..   
+
+<br><br>
+
+### 결론
+#### 1. ( length - down ) % ( up - down ) 가 정확하게 0 으로 떨어지는 경우   
+- 달팽이가 꼭대기까지 다 올라갔다는 뜻. 더이상 미끄러져 내려오지 않음   
+    
+#### 2. ( length - down ) % ( up - down ) 가 나머지가 남는 경우   
+- 달팽이가 올라가야할 길이 남아있다는 뜻. 미끄러져 내려오고 다시 올라가야 함(하루 더 소요)   
+
+```java
+package study.sparta.chapter1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class B_SnailsWantsToGoUp {
+    public static void solution(int a, int b, int v) {
+        int day = (v - b) / (a - b);
+
+        // 나머지가 있을 경우 (잔여 길이가 남아있을 경우)
+        if ((v - b) % (a - b) != 0) day++;
+
+        System.out.println(day) ;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int v = sc.nextInt();
+
+        solution(a,b,v);
+    }
+}
+```
+
+<br><br>
+
+### 3. 하지만 여기서도 문제가 있다!
+- 0.15초 안에 통과해야하기 때문에 시간에서 또 걸린다   
+-> Scanner 대신 BufferedReader 사용
+
+```java
+package study.sparta.chapter1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class B_SnailsWantsToGoUp {
+    public static void solution(int a, int b, int v) {
+        int day = (v - b) / (a - b);
+
+        // 나머지가 있을 경우 (잔여 길이가 남아있을 경우)
+        if ((v - b) % (a - b) != 0) day++;
+
+        System.out.println(day) ;
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        int v = Integer.parseInt(st.nextToken());
+
+        solution(a,b,v);
+    }
+}
+```
